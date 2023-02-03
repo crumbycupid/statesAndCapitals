@@ -115,21 +115,23 @@ public class StatesAndCapitals
         // Use anyMatch()
 
         Boolean isAnyStateLessThan0Elevation =
-                states.stream().anyMatch(allCountriesList)
+                states.stream().anyMatch(elevation -> elevation.getLowestElevationInFeet() < 0);
 
         testResults.put("I2", StatesAndCapitalsCheck.int2(isAnyStateLessThan0Elevation));
 
         // I3. Find if any state's highest elevation is greater than 21000
         // Use anyMatch()
 
-        Boolean isAnyStateGreaterThan21000Elevation = null;
+        Boolean isAnyStateGreaterThan21000Elevation =
+                states.stream().anyMatch(elevation -> elevation.getHighestElevationInFeet() > 21000);
 
         testResults.put("I3", StatesAndCapitalsCheck.int3(isAnyStateGreaterThan21000Elevation));
 
         // I4. Find if all states have an anthem
         // Use allMatch()
 
-        Boolean doAllStatesHaveAnAnthem = null;
+        Boolean doAllStatesHaveAnAnthem =
+                states.stream().allMatch(anthem -> anthem.getStateAnthem().equals(anthem));
 
         testResults.put("I4", StatesAndCapitalsCheck.int4(doAllStatesHaveAnAnthem));
 
@@ -137,7 +139,8 @@ public class StatesAndCapitals
         // Use noneMatch()
         // Can use String.split()
 
-        Boolean doNoStatesHaveAOneWordMotto = null;
+        Boolean doNoStatesHaveAOneWordMotto =
+                states.stream().noneMatch(motto -> motto.getStateMotto().equals());
 
         testResults.put("I5", StatesAndCapitalsCheck.int5(doNoStatesHaveAOneWordMotto));
 
