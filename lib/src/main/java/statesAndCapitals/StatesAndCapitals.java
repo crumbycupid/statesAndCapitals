@@ -115,7 +115,7 @@ public class StatesAndCapitals
         // Use anyMatch()
 
         Boolean isAnyStateLessThan0Elevation =
-                states.stream().anyMatch()
+                states.stream().anyMatch(allCountriesList)
 
         testResults.put("I2", StatesAndCapitalsCheck.int2(isAnyStateLessThan0Elevation));
 
