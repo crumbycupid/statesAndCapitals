@@ -140,7 +140,7 @@ public class StatesAndCapitals
         // Can use String.split()
 
         Boolean doNoStatesHaveAOneWordMotto =
-                states.stream().noneMatch(motto -> motto.getStateMotto().equals());
+                states.stream().noneMatch(motto -> motto.getStateMotto().contains(" "));
 
         testResults.put("I5", StatesAndCapitalsCheck.int5(doNoStatesHaveAOneWordMotto));
 
@@ -149,7 +149,8 @@ public class StatesAndCapitals
         // A11. Submit the average yearly precipitation across all state capitals
         // Use collect(averagingDouble())
 
-        Double averageYearlyPrecipitationAcrossStateCapitals = null;
+        Double averageYearlyPrecipitationAcrossStateCapitals =
+                states.stream().collect(averagingDouble(precipitation -> precipitation.getCapital().getAverageYearlyPrecipitationInInches()));
 
         testResults.put("A11", StatesAndCapitalsCheck.adv11(averageYearlyPrecipitationAcrossStateCapitals));
 
@@ -157,21 +158,24 @@ public class StatesAndCapitals
         // Use collect(summingInt())  (PS: IntelliJ will warn you to use the version on the next line, but it's useful to see how summingInt() works)
         // Or use mapToInt() and sum()
 
-        Integer totalYearlyPrecipitationAcrossStateCapitals = null;
+        Integer totalYearlyPrecipitationAcrossStateCapitals =
+                states.stream().collect(summingInt(sum -> sum.getCapital().getAverageYearlyPrecipitationInInches()));
 
         testResults.put("A12", StatesAndCapitalsCheck.adv12(totalYearlyPrecipitationAcrossStateCapitals));
 
         // A13. Submit how many states are in each time zone (or group of time zones)
         // Use collect(groupingBy()) and counting()
 
-        Map<String, Long> numberOfStatesByTimeZone = null;
+        Map<String, Long> numberOfStatesByTimeZone =
+                states.stream().collect(groupingBy(group -> group.getTimeZones().toString(), counting()));
 
         testResults.put("A13", StatesAndCapitalsCheck.adv13(numberOfStatesByTimeZone));
 
         // A14. Submit how many state capitals are in each time zone
         // Use collect(groupingBy()) and counting()
 
-        Map<String, Long> numberOfStateCapitalsByTimeZone = null;
+        Map<String, Long> numberOfStateCapitalsByTimeZone =
+                states.stream().collect(groupingBy(group -> group.getCapital().getTimeZone(), counting()));
 
         testResults.put("A14", StatesAndCapitalsCheck.adv14(numberOfStateCapitalsByTimeZone));
 
